@@ -16,12 +16,12 @@ class VendedorController extends Controller
 
     public function store(Request $request)
     {
-        $validated = $request->validate([
+        $validacao = $request->validate([
             'nome' => 'required|string|max:255',
             'cpf' => 'required|string|max:14|unique:vendedores,cpf',
         ]);
 
-        $vendedor = Vendedor::create($validated);
+        $vendedor = Vendedor::create($validacao);
 
         return response()->json($vendedor, 201); 
     }

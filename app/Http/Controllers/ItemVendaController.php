@@ -16,7 +16,7 @@ class ItemVendaController extends Controller
 
     public function store(Request $request)
     {
-        $validated = $request->validate([
+        $validacao = $request->validate([
             'venda_id' => 'nullable|exists:vendas,id',
             'produto_id' => 'nullable|exists:produtos,id',
             'quantidade' => 'required|integer|min:1',
@@ -24,7 +24,7 @@ class ItemVendaController extends Controller
             'subTotal' => 'required|numeric|min:0',
         ]);
 
-        $itemVenda = ItemVenda::create($validated);
+        $itemVenda = ItemVenda::create($validacao);
 
         return response()->json($itemVenda, 201);
     }

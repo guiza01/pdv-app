@@ -16,11 +16,11 @@ class FormaDePagamentoController extends Controller
 
     public function store(Request $request)
     {
-        $validated = $request->validate([
+        $validacao = $request->validate([
             'descricao' => 'required|string|max:255',
         ]);
 
-        $formaDePagamento = FormaDePagamento::create($validated);
+        $formaDePagamento = FormaDePagamento::create($validacao);
 
         return response()->json($formaDePagamento, 201);
     }
@@ -34,12 +34,12 @@ class FormaDePagamentoController extends Controller
 
     public function update(Request $request, $id)
     {
-        $validated = $request->validate([
+        $validacao = $request->validate([
             'descricao' => 'required|string|max:255',
         ]);
 
         $formaDePagamento = FormaDePagamento::findOrFail($id);
-        $formaDePagamento->update($validated);
+        $formaDePagamento->update($validacao);
 
         return response()->json($formaDePagamento);
     }

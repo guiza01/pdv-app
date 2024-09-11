@@ -16,12 +16,12 @@ class ClienteController extends Controller
 
     public function store(Request $request)
     {
-        $validated = $request->validate([
+        $validacao = $request->validate([
             'nome' => 'required|string|max:255',
             'cpf' => 'required|string|max:14|unique:clientes,cpf',
         ]);
 
-        $cliente = Cliente::create($validated);
+        $cliente = Cliente::create($validacao);
 
         return response()->json($cliente, 201);
     }
@@ -35,13 +35,13 @@ class ClienteController extends Controller
 
     public function update(Request $request, $id)
     {
-        $validated = $request->validate([
+        $validacao = $request->validate([
             'nome' => 'required|string|max:255',
             'cpf' => 'required|string|max:14|unique:clientes,cpf,' . $id,
         ]);
 
         $cliente = Cliente::findOrFail($id);
-        $cliente->update($validated);
+        $cliente->update($validacao);
 
         return response()->json($cliente);
     }

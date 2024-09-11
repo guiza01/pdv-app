@@ -16,13 +16,13 @@ class ProdutoController extends Controller
 
     public function store(Request $request)
     {
-        $validated = $request->validate([
+        $validacao = $request->validate([
             'nome' => 'required|string|max:255',
             'valor' => 'required|numeric|min:0',
             'descricao' => 'required|string|max:1000',
         ]);
 
-        $produto = Produto::create($validated);
+        $produto = Produto::create($validacao);
 
         return response()->json($produto, 201);
     }

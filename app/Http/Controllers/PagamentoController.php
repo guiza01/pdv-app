@@ -16,14 +16,14 @@ class PagamentoController extends Controller
 
     public function store(Request $request)
     {
-        $validated = $request->validate([
+        $validacao = $request->validate([
             'dataPagamento' => 'required|date',
             'venda_id' => 'nullable|exists:vendas,id',
             'formaDePagamento_id' => 'nullable|exists:forma_de_pagamentos,id',
             'valor' => 'required|numeric|min:0',
         ]);
 
-        $pagamento = Pagamento::create($validated);
+        $pagamento = Pagamento::create($validacao);
 
         return response()->json($pagamento, 201);
     }
@@ -37,7 +37,7 @@ class PagamentoController extends Controller
 
     public function update(Request $request, $id)
     {
-        $validated = $request->validate([
+        $validacao = $request->validate([
             'dataPagamento' => 'required|date',
             'venda_id' => 'nullable|exists:vendas,id',
             'formaDePagamento_id' => 'nullable|exists:forma_de_pagamentos,id',
@@ -45,7 +45,7 @@ class PagamentoController extends Controller
         ]);
 
         $pagamento = Pagamento::findOrFail($id);
-        $pagamento->update($validated);
+        $pagamento->update($validacao);
 
         return response()->json($pagamento);
     }

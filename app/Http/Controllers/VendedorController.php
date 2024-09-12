@@ -11,7 +11,7 @@ class VendedorController extends Controller
     public function index()
     {
         $vendedores = Vendedor::all();
-        return response()->json($vendedores);
+        return view('vendedor', compact('vendedores'));
     }
 
     public function store(Request $request)

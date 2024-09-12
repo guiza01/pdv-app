@@ -11,7 +11,7 @@ class VendaController extends Controller
     public function index()
     {
         $vendas = Venda::with(['cliente', 'formaDePagamento'])->get();
-        return response()->json($vendas);
+        return view('venda', compact('vendas'));
     }
 
     public function store(Request $request)

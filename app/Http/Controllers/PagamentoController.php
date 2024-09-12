@@ -11,7 +11,7 @@ class PagamentoController extends Controller
     public function index()
     {
         $pagamentos = Pagamento::with(['venda', 'formaDePagamento'])->get();
-        return response()->json($pagamentos);
+        return view('pagamento', compact('pagamentos'));
     }
 
     public function store(Request $request)

@@ -19,12 +19,12 @@ class Venda extends Model
 
     public function cliente()
     {
-        return $this->hasMany(Cliente::class);
+        return $this->belongsTo(Cliente::class);
     }
 
     public function formaDePagamento()
     {
-        return $this->hasOne(FormaDePagamento::class, 'formaDePagamento_id');
+        return $this->belongsTo(FormaDePagamento::class, 'formaDePagamento_id');
     }
 
 }

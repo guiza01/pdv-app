@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\Produto;
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 class ProdutoController extends Controller
@@ -22,21 +21,34 @@ class ProdutoController extends Controller
             'descricao' => 'required|string|max:1000',
         ]);
 
-        $produto = Produto::create($validacao);
+        $produto = new Produto();
+        $produto->nome = $validacao['nome'];
+        $produto->valor = $validacao['valor'];
+        $produto->descricao = $validacao['descricao'];
+        $produto->save();
+        
+        return redirect()->route('produtos')->with('success', 'Produto adicionado com sucesso!');
+    }
 
-        return response()->json($produto, 201);
+    public function create()
+    {
+        return view('create');
     }
 
     public function show($id)
     {
         $produto = Produto::findOrFail($id);
+        return view('show', compact('produto')); // Atualize para uma view 'show' se necessário
+    }
 
-        return response()->json($produto);
+    public function edit($id)
+    {
+        $produto = Produto::findOrFail($id);
+        return view('edit', compact('produto')); // Certifique-se de que há uma view 'edit'
     }
 
     public function update(Request $request, $id)
     {
-
         $validated = $request->validate([
             'nome' => 'required|string|max:255',
             'valor' => 'required|numeric|min:0',
@@ -46,7 +58,7 @@ class ProdutoController extends Controller
         $produto = Produto::findOrFail($id);
         $produto->update($validated);
 
-        return response()->json($produto);
+        return redirect()->route('produtos')->with('success', 'Produto atualizado com sucesso!');
     }
 
     public function destroy($id)
@@ -54,6 +66,6 @@ class ProdutoController extends Controller
         $produto = Produto::findOrFail($id);
         $produto->delete();
 
-        return response()->json(['message' => 'Produto deletado com sucesso.']);
+        return redirect()->route('produtos')->with('success', 'Produto deletado com sucesso!');
     }
 }

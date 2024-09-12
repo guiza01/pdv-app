@@ -13,6 +13,11 @@ Route::get('/', function () {
 
 Route::middleware('auth')->group(function () {
     Route::get('/produtos', [ProdutoController::class, 'index'])->name('produtos');
+    Route::get('/produtos/adicionar', [ProdutoController::class, 'create'])->name('produtos.create');
+    Route::post('/produtos/adicionar', [ProdutoController::class, 'store'])->name('produtos.store');
+    Route::get('/produtos/{id}/edit', [ProdutoController::class, 'edit'])->name('produtos.edit');
+    Route::put('/produtos/{id}', [ProdutoController::class, 'update'])->name('produtos.update');
+    Route::delete('/produtos/{id}', [ProdutoController::class, 'destroy'])->name('produtos.destroy');
     Route::get('/clientes', [ClienteController::class, 'index'])->name('clientes');
     Route::get('/pagamento', [PagamentoController::class, 'index'])->name('pagamento');
     Route::get('/venda', [VendaController::class, 'index'])->name('venda');

@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\Cliente;
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 class ClienteController extends Controller
@@ -21,16 +20,29 @@ class ClienteController extends Controller
             'cpf' => 'required|string|max:14|unique:clientes,cpf',
         ]);
 
-        $cliente = Cliente::create($validacao);
+        $cliente = new Cliente();
+        $cliente->nome = $validacao['nome'];
+        $cliente->cpf = $validacao['cpf'];
+        $cliente->save();
+        
+        return redirect()->route('clientes')->with('success', 'Cliente adicionado com sucesso!');
+    }
 
-        return response()->json($cliente, 201);
+    public function create()
+    {
+        return view('cliente.create');
     }
 
     public function show($id)
     {
         $cliente = Cliente::findOrFail($id);
+        return view('show', compact('cliente'));
+    }
 
-        return response()->json($cliente);
+    public function edit($id)
+    {
+        $cliente = Cliente::findOrFail($id);
+        return view('cliente.edit', compact('cliente'));
     }
 
     public function update(Request $request, $id)
@@ -43,7 +55,7 @@ class ClienteController extends Controller
         $cliente = Cliente::findOrFail($id);
         $cliente->update($validacao);
 
-        return response()->json($cliente);
+        return redirect()->route('clientes')->with('success', 'Cliente atualizado com sucesso!');
     }
 
     public function destroy($id)
@@ -51,6 +63,6 @@ class ClienteController extends Controller
         $cliente = Cliente::findOrFail($id);
         $cliente->delete();
 
-        return response()->json(['message' => 'Cliente deletado com sucesso.']);
+        return redirect()->route('clientes')->with('success', 'Cliente deletado com sucesso!');
     }
 }

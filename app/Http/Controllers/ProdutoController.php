@@ -32,7 +32,7 @@ class ProdutoController extends Controller
 
     public function create()
     {
-        return view('create');
+        return view('produto.create');
     }
 
     public function show($id)
@@ -44,7 +44,7 @@ class ProdutoController extends Controller
     public function edit($id)
     {
         $produto = Produto::findOrFail($id);
-        return view('edit', compact('produto')); // Certifique-se de que há uma view 'edit'
+        return view('produto.edit', compact('produto')); // Certifique-se de que há uma view 'edit'
     }
 
     public function update(Request $request, $id)

@@ -13,17 +13,18 @@ class Venda extends Model
 
     protected $fillable = [
         'cliente_id',
-        'formaDePagamento_id',
+        'vendedor_id',
+        'formaDePagamento_id'
     ];
 
     public function cliente()
     {
-        return $this->belongsTo(Cliente::class);
+        return $this->hasMany(Cliente::class);
     }
 
     public function formaDePagamento()
     {
-        return $this->belongsTo(FormaDePagamento::class, 'formaDePagamento_id');
+        return $this->hasOne(FormaDePagamento::class, 'formaDePagamento_id');
     }
 
 }

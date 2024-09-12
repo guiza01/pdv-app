@@ -12,7 +12,8 @@ class Vendedor extends Model
     protected $table = 'vendedores';
     protected $fillable = [
         'nome',
-        'cpf'
+        'cpf',
+        'usuario_id',
     ];
 
 }

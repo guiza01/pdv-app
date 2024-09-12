@@ -14,8 +14,19 @@ class Venda extends Model
     protected $fillable = [
         'cliente_id',
         'vendedor_id',
-        'formaDePagamento_id'
+        'formaDePagamento_id',
+        'dataDoPagamento',
     ];
+
+    public function itens()
+    {
+        return $this->hasMany(ItemVenda::class);
+    }
+
+    public function parcelas()
+    {
+        return $this->hasMany(Parcela::class);
+    }
 
     public function cliente()
     {
@@ -26,5 +37,4 @@ class Venda extends Model
     {
         return $this->belongsTo(FormaDePagamento::class, 'formaDePagamento_id');
     }
-
 }

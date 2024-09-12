@@ -10,36 +10,36 @@
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900 dark:text-black-100">
 
-                    <form action="{{ route('venda.update', $produto->id) }}" method="POST">
+                    <form action="{{ route('venda.update', $venda->id) }}" method="POST">
                         @csrf
                         @method('PUT')
                         <div class="mb-4">
-                            <label for="nome" class="block text-gray-700 dark:text-gray-300">Nome</label>
-                            <input type="text" id="nome" name="nome" value="{{ old('nome', $produto->nome) }}" class="mt-1 block w-full border-gray-300 dark:border-gray-700 rounded-md shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50" required>
+                            <label for="cliente" class="block text-gray-700 dark:text-gray-300">Cliente</label>
+                            <input type="text" id="cliente" name="cliente" value="{{ old('cliente', $venda->cliente_id) }}" class="mt-1 block w-full border-gray-300 dark:border-gray-700 rounded-md shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50" required>
                             @error('nome')
                                 <span class="text-red-500 text-sm">{{ $message }}</span>
                             @enderror
                         </div>
 
                         <div class="mb-4">
-                            <label for="nome" class="block text-gray-700 dark:text-gray-300">Nome</label>
-                            <input type="text" id="nome" name="nome" value="{{ old('nome', $produto->nome) }}" class="mt-1 block w-full border-gray-300 dark:border-gray-700 rounded-md shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50" required>
+                            <label for="formaDePagamento" class="block text-gray-700 dark:text-gray-300">Forma de pagamento</label>
+                            <input type="text" id="formaDePagamento" name="formaDePagamento" value="{{ old('formaDePagamento', default: $venda->formaDePagamento_id) }}" class="mt-1 block w-full border-gray-300 dark:border-gray-700 rounded-md shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50" required>
                             @error('nome')
                                 <span class="text-red-500 text-sm">{{ $message }}</span>
                             @enderror
                         </div>
 
                         <div class="mb-4">
-                            <label for="descricao" class="block text-gray-700 dark:text-gray-300">Descrição</label>
-                            <textarea id="descricao" name="descricao" rows="4" class="mt-1 block w-full border-gray-300 dark:border-gray-700 rounded-md shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50" required>{{ old('descricao', $produto->descricao) }}</textarea>
+                            <label for="dataPagamento" class="block text-gray-700 dark:text-gray-300">Data do pagamento</label>
+                            <textarea id="dataPagamento" name="dataPagamento" rows="4" class="mt-1 block w-full border-gray-300 dark:border-gray-700 rounded-md shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50" required>{{ old('dataPagamento', $venda->dataDoPagamento) }}</textarea>
                             @error('descricao')
                                 <span class="text-red-500 text-sm">{{ $message }}</span>
                             @enderror
                         </div>
 
                         <div class="mb-4">
-                            <label for="valor" class="block text-gray-700 dark:text-gray-300">Valor</label>
-                            <input type="number" id="valor" name="valor" value="{{ old('valor', $produto->valor) }}" step="0.01" min="0" class="mt-1 block w-full border-gray-300 dark:border-gray-700 rounded-md shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50" required>
+                            <label for="vendedor" class="block text-gray-700 dark:text-gray-300">Vendedor</label>
+                            <input type="text" id="vendedor" name="vendedor" value="{{ old('vendedor', $venda->vendedor_id) }}" step="0.01" min="0" class="mt-1 block w-full border-gray-300 dark:border-gray-700 rounded-md shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50" required>
                             @error('valor')
                                 <span class="text-red-500 text-sm">{{ $message }}</span>
                             @enderror
@@ -47,11 +47,10 @@
 
                         <div class="flex items-center justify-end">
                             <button type="submit" class="bg-blue-500 text-white py-2 px-4 rounded-lg shadow-lg hover:shadow-xl transition duration-300 ease-in-out transform hover:scale-105">
-                                Atualizar Produto
+                                Atualizar Venda
                             </button>
                         </div>
                     </form>
-
                 </div>
             </div>
         </div>

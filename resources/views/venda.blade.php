@@ -10,7 +10,7 @@
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900 dark:text-black-100">
 
-                    <form action="{{ route('vendas.store') }}" method="POST">
+                    <form action="{{ route('venda.create') }}" method="GET">
                         @csrf
                         <button type="submit" class="bg-blue-500 text-white py-2 px-4 rounded-lg shadow-lg hover:shadow-xl transition duration-300 ease-in-out transform hover:scale-105">
                             Nova Venda
@@ -37,8 +37,8 @@
                                 <td class="py-2 px-4 border-b">{{ $venda->dataPagamento }}</td>
                                 <td class="py-2 px-4 border-b">{{ $venda->vendedor_id }}</td>
                                 <td class="py-2 px-4 border-b flex space-x-2">
-                                    <a href="{{ route('vendas.edit', $venda->id) }}" class="bg-green-500 text-black py-1 px-3 rounded-lg shadow-lg hover:shadow-xl transition duration-300 ease-in-out transform hover:scale-105">Editar</a>
-                                    <form action="{{ route('vendas.destroy', $venda->id) }}" method="POST" onsubmit="return confirm('Tem certeza que deseja excluir esta venda?');">
+                                    <a href="{{ route('venda.edit', $venda->id) }}" class="bg-green-500 text-black py-1 px-3 rounded-lg shadow-lg hover:shadow-xl transition duration-300 ease-in-out transform hover:scale-105">Editar</a>
+                                    <form action="{{ route('venda.destroy', $venda->id) }}" method="POST" onsubmit="return confirm('Tem certeza que deseja excluir esta venda?');">
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit" class="bg-red-500 text-black py-1 px-3 rounded-lg shadow-lg hover:shadow-xl transition duration-300 ease-in-out transform hover:scale-105">Excluir</button>

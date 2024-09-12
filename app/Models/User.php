@@ -22,6 +22,12 @@ class User extends Authenticatable
         'remember_token',
     ];
 
+    public function vendedor()
+    {
+
+        return $this->hasOne(Vendedor::class, 'usuario_id');
+    }
+
     protected function casts(): array
     {
         return [

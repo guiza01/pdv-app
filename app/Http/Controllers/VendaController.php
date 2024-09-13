@@ -38,7 +38,6 @@ class VendaController extends Controller
 
         ]);
 
-        dd(auth('web'));
 
         $venda = Venda::create([
             'cliente_id' => $validacao['cliente_id'],

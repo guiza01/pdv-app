@@ -34,7 +34,7 @@
                                 <td class="py-2 px-4 border-b">{{ $venda->id }}</td>
                                 <td class="py-2 px-4 border-b">{{ $venda->cliente_id }}</td>
                                 <td class="py-2 px-4 border-b">{{ $venda->formaDePagamento_id }}</td>
-                                <td class="py-2 px-4 border-b">{{ $venda->dataPagamento }}</td>
+                                <td class="py-2 px-4 border-b">{{ $venda->created_at }}</td>
                                 <td class="py-2 px-4 border-b">{{ $venda->vendedor_id }}</td>
                                 <td class="py-2 px-4 border-b flex space-x-2">
                                     <a href="{{ route('venda.edit', $venda->id) }}" class="bg-green-500 text-black py-1 px-3 rounded-lg shadow-lg hover:shadow-xl transition duration-300 ease-in-out transform hover:scale-105">Editar</a>

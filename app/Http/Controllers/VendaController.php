@@ -14,7 +14,7 @@ class VendaController extends Controller
 {
     public function index()
     {
-        $vendas = Venda::with(['cliente', 'formaDePagamento', 'item_venda'])->get();
+        $vendas = Venda::with(['cliente', 'formaDePagamento', 'itens'])->get();
         //return view('venda', compact('vendas'));
 
         $clientes = Cliente::all();

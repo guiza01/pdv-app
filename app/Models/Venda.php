@@ -16,6 +16,7 @@ class Venda extends Model
         'vendedor_id',
         'formaDePagamento_id',
         'dataDoPagamento',
+        'created_at',
     ];
 
     public function itens()

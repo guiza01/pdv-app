@@ -13,9 +13,8 @@
                         <form action="{{ route('venda.create') }}" method="POST">
                             @csrf
 
-                            <!-- Cliente -->
                             <div class="form-group mb-4">
-                                <label for="cliente_id" class="block text-sm font-medium text-white">Nome do Cliente</label>
+                                <label for="cliente_id" class="block text-sm font-medium text-white-700">Nome do Cliente</label>
                                 <select class="form-control mt-1 block w-full border-gray-300 rounded-md shadow-sm" id="cliente_id" name="cliente_id">
                                     <option value="">Selecione um cliente</option>
                                     @foreach($clientes as $cliente)
@@ -24,9 +23,8 @@
                                 </select>
                             </div>
 
-                            <!-- Forma de Pagamento -->
                             <div class="form-group mb-4">
-                                <label for="formaDePagamento_id" class="block text-sm font-medium text-white">Pagamento</label>
+                                <label for="formaDePagamento_id" class="block text-sm font-medium text-white-700">Pagamento</label>
                                 <select class="form-control mt-1 block w-full border-gray-300 rounded-md shadow-sm" id="formaDePagamento_id" name="formaDePagamento_id" required>
                                     <option value="">Forma de pagamento</option>
                                     @foreach($formasDePagamento as $forma)
@@ -35,29 +33,23 @@
                                 </select>
                             </div>
 
-                            <!-- Campo para selecionar parcelas (oculto inicialmente) -->
-                            <div id="parcelas_section" class="form-group mb-4" style="display:none;">
-                                <label for="num_parcelas" class="block text-sm font-medium text-white ">Número de Parcelas</label>
-                                <input type="number" id="num_parcelas" name="num_parcelas" class="form-control mt-1 block w-full border-gray-300 rounded-md shadow-sm" min="1">
+                            <div class="form-group mb-4">
+                                <label for="produtos" class="block text-sm font-medium text-white-700">Produtos</label>
+                                <div id="produtos-container" class="mt-1">
+                                </div>
+                                <button type="button" onclick="addProduct()" class="btn bg-gray-500 text-black mt-2">Adicionar Produto</button>
                             </div>
 
-                            <!-- Produtos -->
                             <div class="form-group mb-4">
-                                <label for="produtos" class="block text-sm font-medium text-white ">Produtos</label>
-                                <div id="produtos-container" class="mt-1"></div>
-                                <button type="button" onclick="addProduct()" class="btn btn-primary bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 mt-2">Adicionar Produto</button>
+                                <label for="data_pagamento" class="block text-sm font-medium text-white-700">Data de Pagamento</label>
+                                <input type="date" class="form-control mt-1 block w-full border-gray-300 rounded-md shadow-sm" id="data_pagamento" name="data_pagamento" required>
                             </div>
 
-                            <!-- Valor Total -->
                             <div class="form-group mb-4">
-                                <label for="valor_total" class="block text-sm font-medium text-white ">Valor Total</label>
+                                <label for="valor_total" class="block text-sm font-medium text-white-700">Valor Total</label>
                                 <input type="text" class="form-control mt-1 block w-full border-gray-300 rounded-md shadow-sm" id="valor_total" name="valor_total" value="{{ old('valor_total') }}" readonly>
                             </div>
 
-                            <!-- Exibir parcelas e suas datas -->
-                            <div id="parcelas_datas_section"></div>
-
-                            <!-- Exibir erros -->
                             @if ($errors->any())
                             <div class="alert alert-danger">
                                 <ul>
@@ -70,12 +62,10 @@
 
                             <input type="hidden" id="produtos-selecionados" name="produtos-selecionados">
 
-                            <!-- Submeter -->
                             <button type="submit" class="btn btn-primary bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500">Finalizar</button>
                         </form>
                     </div>
 
-                    <!-- Scripts -->
                     <script>
                         document.addEventListener('DOMContentLoaded', function() {
                             const today = new Date().toISOString().split('T')[0];
@@ -130,43 +120,6 @@
                             const selecionados = Array.from(document.querySelectorAll('#produtos-container select')).map(select => select.value).filter(value => value);
                             document.getElementById('produtos-selecionados').value = selecionados.join(',');
                         }
-
-                        // Novo script para controlar a exibição e o cálculo das parcelas
-                        document.getElementById('formaDePagamento_id').addEventListener('change', function() {
-                            const formaPagamento = this.value;
-                            const parcelasSection = document.getElementById('parcelas_section');
-                            
-                            if (formaPagamento === '2') {  // Supondo que '2' seja o ID da forma de pagamento "Crédito"
-                                parcelasSection.style.display = 'block';
-                            } else {
-                                parcelasSection.style.display = 'none';
-                                document.getElementById('parcelas_datas_section').innerHTML = '';
-                            }
-                        });
-
-                        document.getElementById('num_parcelas').addEventListener('input', function() {
-                            const numParcelas = parseInt(this.value);
-                            const valorTotal = parseFloat(document.getElementById('valor_total').value);
-                            const parcelasSection = document.getElementById('parcelas_datas_section');
-                            const today = new Date();
-
-                            if (!isNaN(numParcelas) && numParcelas > 0 && valorTotal > 0) {
-                                let valorParcela = (valorTotal / numParcelas).toFixed(2);
-                                parcelasSection.innerHTML = '';
-
-                                for (let i = 1; i <= numParcelas; i++) {
-                                    let dataParcela = new Date(today);
-                                    dataParcela.setDate(dataParcela.getDate() + (30 * (i - 1)));
-
-                                    parcelasSection.innerHTML += `
-                                        <div class="form-group">
-                                            <label class="block text-sm font-medium text-white">Parcela ${i}: R$ ${valorParcela} - Data: </label>
-                                            <input type="date" name="data_parcela_${i}" class="form-control mt-1 block w-full border-gray-300 rounded-md shadow-sm" value="${dataParcela.toISOString().substring(0, 10)}" readonly />
-                                        </div>
-                                    `;
-                                }
-                            }
-                        });
                     </script>
                 </div>
             </div>

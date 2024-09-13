@@ -24,8 +24,8 @@
                             </div>
 
                             <div class="form-group mb-4">
-                                <label for="forma_pagamento" class="block text-sm font-medium text-gray-700">Pagamento</label>
-                                <select class="form-control mt-1 block w-full border-gray-300 rounded-md shadow-sm" id="forma_pagamento" name="forma_pagamento" required>
+                                <label for="formaDePagamento_id" class="block text-sm font-medium text-gray-700">Pagamento</label>
+                                <select class="form-control mt-1 block w-full border-gray-300 rounded-md shadow-sm" id="formaDePagamento_id" name="formaDePagamento_id" required>
                                     <option value="">Forma de pagamento</option>
                                     @foreach($formasDePagamento as $forma)
                                     <option value="{{ $forma->id }}">{{ $forma->descricao }}</option>
@@ -42,14 +42,14 @@
 
                             <div class="form-group mb-4">
                                 <label for="data_pagamento" class="block text-sm font-medium text-gray-700">Data de Pagamento</label>
-                                <input type="date" class="form-control mt-1 block w-full border-gray-300 rounded-md shadow-sm" id="data_pagamento" name="data_pagamento" value="{{ old('data_pagamento') }}" required>
+                                <input type="date" class="form-control mt-1 block w-full border-gray-300 rounded-md shadow-sm" id="data_pagamento" name="data_pagamento" required>
                             </div>
 
                             <div class="form-group mb-4">
                                 <label for="valor_total" class="block text-sm font-medium text-gray-700">Valor Total</label>
                                 <input type="text" class="form-control mt-1 block w-full border-gray-300 rounded-md shadow-sm" id="valor_total" name="valor_total" value="{{ old('valor_total') }}" readonly>
                             </div>
-                            
+
                             @if ($errors->any())
                             <div class="alert alert-danger">
                                 <ul>
@@ -67,6 +67,11 @@
                     </div>
 
                     <script>
+                        document.addEventListener('DOMContentLoaded', function() {
+                            const today = new Date().toISOString().split('T')[0];
+                            document.getElementById('data_pagamento').value = today;
+                        });
+
                         let produtoIndex = 1;
 
                         function addProduct() {

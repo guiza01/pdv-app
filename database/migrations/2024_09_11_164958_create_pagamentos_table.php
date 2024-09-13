@@ -14,8 +14,8 @@ return new class extends Migration
         Schema::create('pagamentos', function (Blueprint $table) {
             $table->id();
             $table->date('dataPagamento');
-            $table->unsignedBigInteger('venda_id')->nullable();
-            $table->foreign('venda_id')->references('id')->on('clientes');
+            $table->unsignedBigInteger('venda_id')->nullable(); // Definir venda_id como nullable, se necessário
+            $table->foreign('venda_id')->references('id')->on('vendas'); // Relaciona corretamente à tabela vendas
             $table->unsignedBigInteger('formaDePagamento_id')->nullable();
             $table->foreign('formaDePagamento_id')->references('id')->on('forma_de_pagamentos')->onDelete('set null');
             $table->decimal('valor', 10, 2);

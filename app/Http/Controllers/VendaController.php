@@ -6,6 +6,7 @@ use App\Models\Venda;
 use App\Models\Cliente;
 use App\Models\FormaDePagamento;
 use App\Models\Produto;
+use App\Models\ItemVenda;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
@@ -13,11 +14,12 @@ class VendaController extends Controller
 {
     public function index()
     {
-        $vendas = Venda::with(['cliente', 'formaDePagamento'])->get();
+        $vendas = Venda::with(['cliente', 'formaDePagamento', 'item_venda'])->get();
         //return view('venda', compact('vendas'));
 
         $clientes = Cliente::all();
         $formasDePagamento = FormaDePagamento::all();
+        $itens = ItemVenda::all();
 
         return view('venda', [
             'vendas' => $vendas,
@@ -27,7 +29,7 @@ class VendaController extends Controller
     public function store(Request $request)
     {
         $validacao = $request->validate([
-            'cliente_nome' => 'nullable|exists:clientes,id',
+            'cliente_id' => 'nullable|exists:clientes,id',
             'parcelas' => 'nullable|numeric|min:1',
             'data_pagamento' => 'required|date',
             'valor_total' => 'required|numeric|min:0',
@@ -35,7 +37,7 @@ class VendaController extends Controller
             'produtos.*.id' => 'required|exists:produtos,id',
             'produtos.*.quantidade' => 'required|numeric|min:1',
             'produtos.*.valor' => 'required',
-
+            'formaDePagamento_id' => 'required|exists:forma_de_pagamentos,id',
         ]);
 
 
@@ -47,10 +49,11 @@ class VendaController extends Controller
 
         if (isset($validacao['produtos'])) {
             foreach ($validacao['produtos'] as $item) {
-                \DB::table('item_venda')->insert([
-                    'produto_id' => $item['produto_id'],
+                $venda->itens()->create([
+                    'produto_id' => $item['id'],
                     'quantidade' => $item['quantidade'],
-                    'venda_id' => $venda->id,
+                    'precoUnitario' => $item['valor'],
+                    'subTotal' => $item['quantidade'] * $item['valor'],
                 ]);
             }
         }
@@ -89,6 +92,18 @@ class VendaController extends Controller
 
         return response()->json($venda);
     }
+
+    public function edit($id)
+    {
+        $venda = Venda::with(['itens.produto', 'parcelas', 'cliente'])->findOrFail($id);
+
+        $clientes = Cliente::all();
+        $formasDePagamento = FormaDePagamento::all();
+        $produtos = Produto::all();
+
+        return view('venda.edit', compact('venda', 'clientes', 'formasDePagamento', 'produtos'));
+    }
+
 
     public function update(Request $request, $id)
     {

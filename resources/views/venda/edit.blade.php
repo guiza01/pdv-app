@@ -22,8 +22,8 @@
                         </div>
 
                         <div class="mb-4">
-                            <label for="formaDePagamento" class="block text-gray-700 dark:text-gray-300">Forma de pagamento</label>
-                            <input type="text" id="formaDePagamento" name="formaDePagamento" value="{{ old('formaDePagamento', default: $venda->formaDePagamento_id) }}" class="mt-1 block w-full border-gray-300 dark:border-gray-700 rounded-md shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50" required>
+                            <label for="formaDePagamento_id" class="block text-gray-700 dark:text-gray-300">Forma de pagamento</label>
+                            <input type="text" id="formaDePagamento_id" name="formaDePagamento_id" value="{{ old('formaDePagamento_id', default: $venda->formaDePagamento_id) }}" class="mt-1 block w-full border-gray-300 dark:border-gray-700 rounded-md shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50" required>
                             @error('nome')
                                 <span class="text-red-500 text-sm">{{ $message }}</span>
                             @enderror
